@@ -42,3 +42,11 @@ async function findByIdComputadores(){
 }
 
 findAllComputadores();
+
+function abrirModalCadastro() {
+  document.querySelector(".modal-overlay").style.display = "flex";
+}
+
+function fecharModalCadastro() {
+  document.querySelector(".modal-overlay").style.display = "none";
+}

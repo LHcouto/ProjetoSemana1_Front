@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./assets/style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./assets/style.css" />
     <title>Loja Gamer</title>
+  </head>
 
-</head>
-
-<body>
+  <body>
     <section class="Home">
       <div class="Home__header Header">
         <div class="row">
@@ -38,22 +37,73 @@
       <h2>Pesquisar Computador:</h2>
       <div class="computador-escolhido-espaco">
         <div id="computador-escolhido-input-espaco">
-            <input type="number" id="idComputador" placeholder="Digite o ID do computador e clique em 'Escolher'" />
-            <button id="idComputadorButton" onclick="findByIdComputadores()">ESCOLHER</button>
+          <input
+            type="number"
+            id="idComputador"
+            placeholder="Digite o ID do computador e clique em 'Escolher'"
+          />
+          <button id="idComputadorButton" onclick="findByIdComputadores()">
+            ESCOLHER
+          </button>
         </div>
-        <div id="computadorEscolhido">
+        <div id="computadorEscolhido"></div>
+      </div>
+      <section class="button-modal-create">
+        <button
+          type="button"
+          class="default-button"
+          onclick="abrirModalCadastro()"
+        >
+          Cadastrar Computador
+        </button>
+      </section>
 
-        </div>
-    </div>
-        <h2>Computadores disponiveis:</h2>
+      <section class="modal-overlay" id="overlay">
+        <div class="modal">
+          <div class="modal-header">
+            <h2>Cadastrar um computador</h2>
+            <a onclick="fecharModalCadastro()" class="close-modal">x</a>
+          </div>
 
-        <div class="Home__container">
-          <div class='ComputadorLista' id="computadorList">
-
+          <div class="modal-body">
+            <div>
+              <input
+                type="text"
+                name="sabor"
+                id="sabor"
+                placeholder="Sabor da Paleta"
+              />
+              <input
+                type="number"
+                name="preco"
+                id="preco"
+                placeholder="Preço da Paleta"
+              />
+              <textarea
+                type="text"
+                name="descricao"
+                id="descricao"
+                placeholder="Descrição da Paleta"
+                rows="5"
+              ></textarea>
+              <input
+                type="text"
+                name="foto"
+                id="foto"
+                placeholder="Link da Foto da Paleta"
+              />
+              <button onclick="createPaleta()">Cadastrar</button>
+            </div>
           </div>
         </div>
       </section>
-    
+      <h2>Computadores disponiveis:</h2>
+
+      <div class="Home__container">
+        <div class="ComputadorLista" id="computadorList"></div>
+      </div>
+    </section>
+
     <script src="./assets/script.js"></script>
-</body>
+  </body>
 </html>
