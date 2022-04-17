@@ -22,4 +22,23 @@ async function findAllComputadores() {
     });
 }
 
+async function findByIdComputadores(){
+    const id = document.querySelector("#idComputador").value
+
+    const response = await fetch(`${baseURL}/computador/${id}`)
+    const computador = await response.json();
+    
+    const computadorEscolhidoDiv = document.querySelector('#computadorEscolhido');
+
+    computadorEscolhidoDiv.innerHTML = `
+    <div class="ComputadorCardItem">
+    <div>
+      <div class="ComputadorCardItem__sabor">${computador.nome}</div>
+      <div class="ComputadorCardItem__preco">R$ ${computador.preco}</div>
+      <div class="ComputadorCardItem__descricao">${computador.descricao}</div>
+    </div>
+      <img class="ComputadorCardItem__foto" src="${computador.foto}" alt=Computador ${computador.nome}>
+   </div>`
+}
+
 findAllComputadores();
