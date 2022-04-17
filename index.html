@@ -42,7 +42,7 @@
             id="idComputador"
             placeholder="Digite o ID do computador e clique em 'Escolher'"
           />
-          <button id="idComputadorButton" onclick="findByIdComputadores()">
+          <button class="default-button" onclick="findByIdComputadores()">
             ESCOLHER
           </button>
         </div>
@@ -69,30 +69,30 @@
             <div>
               <input
                 type="text"
-                name="sabor"
-                id="sabor"
-                placeholder="Sabor da Paleta"
+                name="nome"
+                id="nome"
+                placeholder="Nome do Computador"
               />
               <input
                 type="number"
                 name="preco"
                 id="preco"
-                placeholder="Preço da Paleta"
+                placeholder="Preço do Computador"
               />
               <textarea
                 type="text"
                 name="descricao"
                 id="descricao"
-                placeholder="Descrição da Paleta"
+                placeholder="Descrição do Computador"
                 rows="5"
               ></textarea>
               <input
                 type="text"
                 name="foto"
                 id="foto"
-                placeholder="Link da Foto da Paleta"
+                placeholder="Link da Foto do Computador"
               />
-              <button onclick="createPaleta()">Cadastrar</button>
+              <button onclick="createComputador()">Cadastrar</button>
             </div>
           </div>
         </div>

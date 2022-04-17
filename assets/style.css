@@ -141,7 +141,7 @@ html {
     border-radius: 0.2rem;
   }
   
-  #idComputadorButton {
+  .default-button {
     background-color: transparent;
     border: 2px solid #9400d3;
     padding: 0.4rem;
@@ -155,7 +155,7 @@ html {
     font-size: 1rem;
   }
   
-  #idComputadorButton:hover {
+  .default-button:hover {
     background-color: #9400d3;
     color: #ffffff;
   }
@@ -340,7 +340,7 @@ html {
   }
   
   .modal-body div button:hover{
-    background-color: #0097ce;
+    background-color: #df0ab1;
     color: #fff;
   }
   
@@ -348,3 +348,5 @@ html {
     display: flex;
     justify-content: flex-end;
   }
+
+  
