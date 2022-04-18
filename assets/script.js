@@ -5,7 +5,7 @@ async function findAllComputadores() {
 
   const computadores = await response.json();
 
-  computares.forEach(function (computador) {
+  computadores.forEach(function (computador) {
     document.querySelector("#computadorList").insertAdjacentHTML(
       "beforeend",
       `
@@ -90,7 +90,9 @@ async function createComputador() {
     <img class="ComputadorListaItem__foto" src="${novoComputador.foto}" alt="Computador ${novoComputador.nome}" />
   </div>`;
 
-  document.querySelector("#computadorList").insertAdjacentHTML("beforeend", html);
+  document
+    .querySelector("#computadorList")
+    .insertAdjacentHTML("beforeend", html);
 
   fecharModalCadastro();
 }
