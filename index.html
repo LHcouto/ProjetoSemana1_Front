@@ -49,11 +49,7 @@
         <div id="computadorEscolhido"></div>
       </div>
       <section class="button-modal-create">
-        <button
-          type="button"
-          class="default-button"
-          onclick="abrirModalCadastro()"
-        >
+        <button type="button" class="default-button" onclick="abrirModal()">
           Cadastrar Computador
         </button>
       </section>
@@ -61,12 +57,13 @@
       <section class="modal-overlay" id="overlay">
         <div class="modal">
           <div class="modal-header">
-            <h2>Cadastrar um computador</h2>
+            <h2 id="title-header-modal">Cadastrar um computador</h2>
             <a onclick="fecharModalCadastro()" class="close-modal">x</a>
           </div>
 
           <div class="modal-body">
             <div>
+              <input type="hidden" id="id" />
               <input
                 type="text"
                 name="nome"
@@ -92,7 +89,9 @@
                 id="foto"
                 placeholder="Link da Foto do Computador"
               />
-              <button onclick="createComputador()">Cadastrar</button>
+              <button id="button-form-modal" onclick="createComputador()">
+                Cadastrar
+              </button>
             </div>
           </div>
         </div>

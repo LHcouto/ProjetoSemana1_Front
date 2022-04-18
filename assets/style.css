@@ -82,6 +82,7 @@ html {
   width: 315px;
   display: flex;
   justify-content: space-around;
+  
 }
 
 .ComputadorCardItem {
@@ -348,5 +349,43 @@ html {
     display: flex;
     justify-content: flex-end;
   }
-
+  .Acoes{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1rem;
+  }
   
+  .btn{
+    border: none;
+    border-radius: .3rem;
+    padding: .5rem;
+    max-width: 280px;
+    text-align: center;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: 48%;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .Acoes_editar{
+    color: #224ccb;
+    border: solid 2px #224ccb;
+    background-color: transparent;
+  }
+
+  .Acoes_editar:hover{
+    color: #fff;
+    background-color: #224ccb;
+  }
+
+  .Acoes_apagar{
+    color: #e91313;
+    border: solid 2px #e91313;
+    background-color: transparent;
+  }
+
+  .Acoes_apagar:hover{
+    color: #fff;
+    background-color: #e91313;
+  }

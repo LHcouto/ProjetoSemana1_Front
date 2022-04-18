@@ -9,13 +9,22 @@ async function findAllComputadores() {
     document.querySelector("#computadorList").insertAdjacentHTML(
       "beforeend",
       `
-    <div class="ComputadorListaItem">
+    <div class="ComputadorListaItem" id="ComputadorListaItem__${computador.id}">
         <div>
             <div class="ComputadorListaItem__sabor">${computador.nome}</div>
             <div class="ComputadorListaItem__preco">R$ ${computador.preco}</div>
             <div class="ComputadorListaItem__descricao">${computador.descricao}</div>
+            
+            <div class= "ComputadorListItem__acoes Acoes">
+              <button class ="Acoes_editar btn" onclick =" abrirModal(${computador.id})">Editar</button>
+              <button class ="Acoes_apagar btn">Apagar</button>
+            </div>
         </div>
+        
         <img class="ComputadorListaItem__foto" src="${computador.foto}" alt="Computador ${computador.nome}" />
+     
+        
+    
     </div>
     `
     );
@@ -31,11 +40,16 @@ async function findByIdComputadores() {
   const computadorEscolhidoDiv = document.querySelector("#computadorEscolhido");
 
   computadorEscolhidoDiv.innerHTML = `
-  <div class="ComputadorCardItem">
+  <div class="ComputadorCardItem" id="ComputadorListaItem__${computador.id}">
   <div>
       <div class="ComputadorCardItem__sabor">${computador.nome}</div>
       <div class="ComputadorCardItem__preco">R$ ${computador.preco}</div>
       <div class="ComputadorCardItem__descricao">${computador.descricao}</div>
+      
+      <div class= "ComputadorListItem__acoes Acoes">
+          <button class ="Acoes_editar btn" onclick =" abrirModal(${computador.id})">Editar</button>
+          <button class ="Acoes_apagar btn">Apagar</button>
+      </div>
   </div>
   <img class="ComputadorCardItem__foto" src="${computador.foto}" alt="Computador ${computador.nome}" />
 </div>`;
@@ -43,7 +57,27 @@ async function findByIdComputadores() {
 
 findAllComputadores();
 
-function abrirModalCadastro() {
+async function abrirModal(id = null) {
+  if (id != null) {
+    document.querySelector("#title-header-modal").innerText =
+      "Atualizar um computador";
+
+    document.querySelector("#button-form-modal").innerText = "Atualizar";
+
+    const response = await fetch(`${baseURL}/computador/${id}`);
+    const computador = await response.json();
+
+    document.querySelector("#nome").value = computador.nome;
+    document.querySelector("#preco").value = computador.preco;
+    document.querySelector("#descricao").value = computador.descricao;
+    document.querySelector("#foto").value = computador.foto;
+    document.querySelector("#id").value = computador.id;
+  } else {
+    document.querySelector("#title-header-modal").innerText =
+      "Cadastrar um computador";
+    document.querySelector("#button-form-modal").innerText = "Cadastrar";
+  }
+
   document.querySelector(".modal-overlay").style.display = "flex";
 }
 
@@ -57,20 +91,26 @@ function fecharModalCadastro() {
 }
 
 async function createComputador() {
+  const id = document.querySelector("#id").value;
   const nome = document.querySelector("#nome").value;
   const preco = document.querySelector("#preco").value;
   const descricao = document.querySelector("#descricao").value;
   const foto = document.querySelector("#foto").value;
 
   const computador = {
+    id,
     nome,
     preco,
     descricao,
     foto,
   };
 
-  const response = await fetch(`${baseURL}/create`, {
-    method: "post",
+  const modoEdicaoAtivado = id > 0;
+
+  const endpoint = baseURL + (modoEdicaoAtivado ? `/update/${id}` : `/create`);
+
+  const response = await fetch(endpoint, {
+    method: modoEdicaoAtivado ? "put" : "post",
     headers: {
       "Content-Type": "application/json",
     },
@@ -81,18 +121,27 @@ async function createComputador() {
   const novoComputador = await response.json();
 
   const html = `
-  <div class="ComputadorListaItem">
+  <div class="ComputadorListaItem" id="ComputadorListaItem__${computador.id}">
     <div>
         <div class="ComputadorListaItem__sabor">${novoComputador.nome}</div>
         <div class="ComputadorListaItem__preco">R$ ${novoComputador.preco}</div>
         <div class="ComputadorListaItem__descricao">${novoComputador.descricao}</div>
+
+        <div class= "ComputadorListItem__acoes Acoes">
+              <button class ="Acoes_editar btn" onclick =" abrirModal(${computador.id})">Editar</button>
+              <button class ="Acoes_apagar btn">Apagar</button>
+        </div>
     </div>
     <img class="ComputadorListaItem__foto" src="${novoComputador.foto}" alt="Computador ${novoComputador.nome}" />
   </div>`;
 
-  document
-    .querySelector("#computadorList")
-    .insertAdjacentHTML("beforeend", html);
+  if (modoEdicaoAtivado) {
+    document.querySelector(`#ComputadorListaItem__${id}`).outerHTML = html;
+  } else {
+    document
+      .querySelector("#computadorList")
+      .insertAdjacentHTML("beforeend", html);
+  }
 
   fecharModalCadastro();
 }
