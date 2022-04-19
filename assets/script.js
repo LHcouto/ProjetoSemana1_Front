@@ -9,22 +9,21 @@ async function findAllComputadores() {
     document.querySelector("#computadorList").insertAdjacentHTML(
       "beforeend",
       `
-    <div class="ComputadorListaItem" id="ComputadorListaItem__${computador.id}">
+    <div class="ComputadorListaItem" id="ComputadorListaItem_${computador.id}">
         <div>
-            <div class="ComputadorListaItem__sabor">${computador.nome}</div>
+            <div class="ComputadorListaItem__nome">${computador.nome}</div>
             <div class="ComputadorListaItem__preco">R$ ${computador.preco}</div>
             <div class="ComputadorListaItem__descricao">${computador.descricao}</div>
-            
-            <div class= "ComputadorListItem__acoes Acoes">
-              <button class ="Acoes_editar btn" onclick =" abrirModal(${computador.id})">Editar</button>
-              <button class ="Acoes_apagar btn">Apagar</button>
+
+            <div class="ComputadorListaItem__acoes Acoes">
+              <button class="Acoes__editar btn" onclick="abrirModal(${computador.id})">Editar</button> 
+              <button class="Acoes__apagar btn" onclick="abrirModalDelete(${computador.id})">Apagar</button> 
             </div>
         </div>
         
         <img class="ComputadorListaItem__foto" src="${computador.foto}" alt="Computador ${computador.nome}" />
-     
+
         
-    
     </div>
     `
     );
@@ -40,15 +39,14 @@ async function findByIdComputadores() {
   const computadorEscolhidoDiv = document.querySelector("#computadorEscolhido");
 
   computadorEscolhidoDiv.innerHTML = `
-  <div class="ComputadorCardItem" id="ComputadorListaItem__${computador.id}">
+  <div class="ComputadorCardItem" id="ComputadorListaItem_${computador.id}">
   <div>
-      <div class="ComputadorCardItem__sabor">${computador.nome}</div>
+      <div class="ComputadorCardItem__nome">${computador.nome}</div>
       <div class="ComputadorCardItem__preco">R$ ${computador.preco}</div>
       <div class="ComputadorCardItem__descricao">${computador.descricao}</div>
       
-      <div class= "ComputadorListItem__acoes Acoes">
-          <button class ="Acoes_editar btn" onclick =" abrirModal(${computador.id})">Editar</button>
-          <button class ="Acoes_apagar btn">Apagar</button>
+      <div class="ComputadorListaItem__acoes Acoes">
+          
       </div>
   </div>
   <img class="ComputadorCardItem__foto" src="${computador.foto}" alt="Computador ${computador.nome}" />
@@ -60,8 +58,7 @@ findAllComputadores();
 async function abrirModal(id = null) {
   if (id != null) {
     document.querySelector("#title-header-modal").innerText =
-      "Atualizar um computador";
-
+      "Atualizar um Computador";
     document.querySelector("#button-form-modal").innerText = "Atualizar";
 
     const response = await fetch(`${baseURL}/computador/${id}`);
@@ -74,18 +71,19 @@ async function abrirModal(id = null) {
     document.querySelector("#id").value = computador.id;
   } else {
     document.querySelector("#title-header-modal").innerText =
-      "Cadastrar um computador";
+      "Cadastrar um Computador";
     document.querySelector("#button-form-modal").innerText = "Cadastrar";
   }
 
-  document.querySelector(".modal-overlay").style.display = "flex";
+  document.querySelector("#overlay").style.display = "flex";
 }
 
-function fecharModalCadastro() {
+function fecharModal() {
   document.querySelector(".modal-overlay").style.display = "none";
 
+  document.querySelector("#id").value = "";
   document.querySelector("#nome").value = "";
-  document.querySelector("#preco").value = 0;
+  document.querySelector("#preco").value = "";
   document.querySelector("#descricao").value = "";
   document.querySelector("#foto").value = "";
 }
@@ -119,29 +117,61 @@ async function createComputador() {
   });
 
   const novoComputador = await response.json();
-
+  console.log(novoComputador);
   const html = `
-  <div class="ComputadorListaItem" id="ComputadorListaItem__${computador.id}">
+  <div class="ComputadorListaItem" id="ComputadorListaItem_${novoComputador.id}">
     <div>
-        <div class="ComputadorListaItem__sabor">${novoComputador.nome}</div>
+        <div class="ComputadorListaItem__nome">${novoComputador.nome}</div>
         <div class="ComputadorListaItem__preco">R$ ${novoComputador.preco}</div>
         <div class="ComputadorListaItem__descricao">${novoComputador.descricao}</div>
 
-        <div class= "ComputadorListItem__acoes Acoes">
-              <button class ="Acoes_editar btn" onclick =" abrirModal(${computador.id})">Editar</button>
-              <button class ="Acoes_apagar btn">Apagar</button>
+        <div class="ComputadorListaItem__acoes Acoes">
+          <button class="Acoes__editar btn" onclick="abrirModal(${novoComputador.id})">Editar</button> 
+          <button class="Acoes__apagar btn" onclick="abrirModalDelete(${novoComputador.id})">Apagar</button> 
         </div>
     </div>
     <img class="ComputadorListaItem__foto" src="${novoComputador.foto}" alt="Computador ${novoComputador.nome}" />
   </div>`;
 
   if (modoEdicaoAtivado) {
-    document.querySelector(`#ComputadorListaItem__${id}`).outerHTML = html;
+    document.querySelector(`#ComputadorListaItem_${id}`).outerHTML = html;
   } else {
     document
       .querySelector("#computadorList")
       .insertAdjacentHTML("beforeend", html);
   }
 
-  fecharModalCadastro();
+  fecharModal();
+}
+
+function abrirModalDelete(id) {
+  document.querySelector("#overlay-delete").style.display = "flex";
+
+  const btnSim = document.querySelector(".btn_delete_yes");
+
+  btnSim.addEventListener("click", function () {
+    deleteComputador(id);
+  });
+}
+
+function fecharModalDelete() {
+  document.querySelector("#overlay-delete").style.display = "none";
+}
+
+async function deleteComputador(id) {
+  const response = await fetch(`${baseURL}/delete/${id}`, {
+    method: "delete",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    mode: "cors",
+  });
+
+  const result = await response.json();
+  alert(result.message);
+
+  document.getElementById("computadorList").innerHTML = "";
+
+  fecharModalDelete();
+  findAllComputadores();
 }

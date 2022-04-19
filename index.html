@@ -10,7 +10,7 @@
 
   <body>
     <section class="Home">
-      <div class="Home__header Header">
+      <header class="Home__header Header">
         <div class="row">
           <div class="Header__logo Logo">
             <img
@@ -33,21 +33,8 @@
             </div>
           </div>
         </div>
-      </div>
-      <h2>Pesquisar Computador:</h2>
-      <div class="computador-escolhido-espaco">
-        <div id="computador-escolhido-input-espaco">
-          <input
-            type="number"
-            id="idComputador"
-            placeholder="Digite o ID do computador e clique em 'Escolher'"
-          />
-          <button class="default-button" onclick="findByIdComputadores()">
-            ESCOLHER
-          </button>
-        </div>
-        <div id="computadorEscolhido"></div>
-      </div>
+      </header>
+
       <section class="button-modal-create">
         <button type="button" class="default-button" onclick="abrirModal()">
           Cadastrar Computador
@@ -58,7 +45,7 @@
         <div class="modal">
           <div class="modal-header">
             <h2 id="title-header-modal">Cadastrar um computador</h2>
-            <a onclick="fecharModalCadastro()" class="close-modal">x</a>
+            <a onclick="fecharModal()" class="close-modal">x</a>
           </div>
 
           <div class="modal-body">
@@ -68,7 +55,7 @@
                 type="text"
                 name="nome"
                 id="nome"
-                placeholder="Nome do Computador"
+                placeholder="Nome do computador"
               />
               <input
                 type="number"
@@ -96,8 +83,44 @@
           </div>
         </div>
       </section>
-      <h2>Computadores disponiveis:</h2>
 
+      <section class="modal-overlay" id="overlay-delete">
+        <div class="modal">
+          <div class="modal-header">
+            <h2 id="title-header-modal">Confirmação de deleção</h2>
+            <a onclick="fecharModalDelete()" class="close-modal">x</a>
+          </div>
+          <div class="modal-body-delete">
+            <p>Deseja realmente apagar esse computador?</p>
+            <div class="btns_delete">
+              <button
+                class="btn_delete_no btn_delete"
+                onclick="fecharModalDelete()"
+              >
+                Não
+              </button>
+              <button class="btn_delete_yes btn_delete">Sim</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <h2>Pesquisar Computador</h2>
+      <div class="computador-escolhido-espaco">
+        <div id="computador-escolhido-input-espaco">
+          <input
+            type="number"
+            id="idComputador"
+            placeholder="Digite o ID do computador e clique em 'Escolher'"
+          />
+          <button class="default-button" onclick="findByIdComputadores()">
+            ESCOLHER
+          </button>
+        </div>
+        <div id="computadorEscolhido"></div>
+      </div>
+
+      <h2>Computadores Disponíveis:</h2>
       <div class="Home__container">
         <div class="ComputadorLista" id="computadorList"></div>
       </div>
